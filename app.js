@@ -4,13 +4,14 @@ import { graphqlHTTP } from 'express-graphql';
 import mongoose from 'mongoose';
 import { print, buildSchema } from 'graphql';
 import dotenv from 'dotenv';
+import User from './models/user.js';
 
 
 dotenv.config();
 
 // Create an express app
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 
 app.use(bodyParser.json());
@@ -20,12 +21,21 @@ const MONGO_URI=`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO
 app.get('/', (req, res) => {
     res.send('Hello World!');
   });
+app.get('/get_all_user',async (req, res) => {
+    try{
+        const users = await User.find();
+        res.json(users);
+    }catch(err){
+        console.error(err);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
 
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         app.listen(port, () => {
             console.log(`Server is running on port localhost:${port}`);
-            console.log(`Visit http://localhost:${port}/graphql to interact with the GraphQL API.`);
+            console.log(`Visit http://localhost:${port}/`);
         });
     })
     .catch(err => {
