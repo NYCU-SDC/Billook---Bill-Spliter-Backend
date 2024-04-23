@@ -12,7 +12,7 @@ const transformUser = user => {
 
 const getSingleTransformedUser = async userID => {
     try {
-        const user = await models.Users.findById(userID);
+        const user = await models.User.findById(userID);
         return transformUser(user);
     } catch (err) {
         throw err;
@@ -21,7 +21,7 @@ const getSingleTransformedUser = async userID => {
 
 const getListTransformedUser = async userIDs => {
     try {
-        const users = await models.Users.find({ _id: { $in: userIDs } });
+        const users = await models.User.find({ _id: { $in: userIDs } });
         return users.map(user => {
             return transformUser(user);
         });

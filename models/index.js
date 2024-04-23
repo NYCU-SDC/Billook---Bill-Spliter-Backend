@@ -1,5 +1,5 @@
-import Users from './Users.js'
+import User from './User.js'
 
 export default {
-    Users
+    User
 }

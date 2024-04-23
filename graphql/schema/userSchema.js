@@ -22,7 +22,6 @@ export const userTypes = `
     type RootQuery {
         users: [User!]!
         user(userID: ID): User!
-        login(email: String!, password: String!): authData!
     }
 
     type RootMutation {
